@@ -72,10 +72,15 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 docker-compose --version
 
-#2.關閉swap分區
+
+
+#2.k8s 前置作業關閉swap分區
 sudo  swapoff -a
 #要永久禁掉swap分区，打开如下文件注释掉swap那一行 （需要注释）
-sudo sed -i 's/^/#swap.img      none    swap    sw      0       0$/swap.img      none    swap    sw      0       0/' /etc/fstab
+sed -i '/\/dev/s/\/dev/#\/dev/g' /etc/fstab
+sed -i '/\/swap.img/s/\/swap.img/#\/swap.img/g' /etc/fstab
+#sed -i '/匹配字串/s/替換源字串/替換目標字串/g' filename ，\ 來跳脫字元 / 的干擾
+
 
 #3.同步時區
 sudo apt-get install ntp
@@ -121,6 +126,7 @@ systemctl restart kubelet
 
 
 #sudo kubeadm init --control-plane-endpoint "LOAD_BALANCER_DNS:LOAD_BALANCER_PORT" --upload-certs #多個master 單一API 預設是port 6443
+# sudo kubeadm init --control-plane-endpoint "172.28.10.41:6443"
 #Your Kubernetes control-plane has initialized successfully!
 #
 #To start using your cluster, you need to run the following as a regular user:
@@ -139,7 +145,7 @@ systemctl restart kubelet
 #  kubeadm join 172.28.10.47:6443 --token vsgkiq.58cxymhln0wa554k \
 #    --discovery-token-ca-cert-hash sha256:51e9eba16e6797e26c926628a58105a2e90fa6f809a27abff82ab4828e9d7abd \
 #    --control-plane --certificate-key 493d654c438943f6ab7297ba562da15188c47ef4d7315caca9856b7abc8ae32e
-#
+
 #Please note that the certificate-key gives access to cluster sensitive data, keep it secret!
 #As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use
 #"kubeadm init phase upload-certs --upload-certs" to reload certs afterward.
