@@ -15,7 +15,6 @@ apt install dbus
 
 sudo sed -i 's/^#Port 22$/Port 22/' /etc/ssh/sshd_config
 sudo sed -i 's/^#PermitRootLogin prohibit-password$/PermitRootLogin yes/' /etc/ssh/sshd_config
-sudo sed -i 's/^#PubkeyAuthentication yes$/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 
 sudo systemctl restart ssh
 sudo systemctl enable ssh
