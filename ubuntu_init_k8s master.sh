@@ -77,7 +77,6 @@ docker-compose --version
 #2.k8s 前置作業關閉swap分區
 sudo  swapoff -a
 #要永久禁掉swap分区，打开如下文件注释掉swap那一行 （需要注释）
-sed -i '/\/dev/s/\/dev/#\/dev/g' /etc/fstab
 sed -i '/\/swap.img/s/\/swap.img/#\/swap.img/g' /etc/fstab
 #sed -i '/匹配字串/s/替換源字串/替換目標字串/g' filename ，\ 來跳脫字元 / 的干擾
 
